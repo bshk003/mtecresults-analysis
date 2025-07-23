@@ -30,20 +30,20 @@ We include the dataset for the TCM 2013.
 
 ### Data Analysis
 
-The `02-data_analysis.ipynb` notebook contains statistical analysis of the collected race reports.
+The `02-data_analysis-tcm2013.ipynb` notebook contains statistical analysis of the TCM 2013 marathon.
 
 1.  **Ensure cleaned data exists**: Run the scraping and cleaning notebook first.
-2.  **Run the analysis notebook**: Open and run all cells in `notebooks/02-data_analysis.ipynb`.
+2.  **Run the analysis notebook**: Open and run all cells in `notebooks/02-data_analysis-2013.ipynb`.
     ```bash
-    jupyter notebook notebooks/02-data_analysis.ipynb
+    jupyter notebook notebooks/02-data_analysis-2013.ipynb
     ```
     This notebook will load the cleaned data and present various analyses on pacing, demographics, and performance.
 ---
 
 ### Customization
 
-* **`config/params.yaml`**: Modify this file to specify different races (`race_id`), adjust runner ID ranges for scraping (`runner_id_ranges`), or update parsing-related parameters.
-* **`src/scraping/mtecresults_scraper.py`**: For changes to scraping logic (e.g. if a race report HTML structure changes) or cleaning rules.
+* **`config/params.yaml`**: Modify this file to specify a race, adjust runner ID ranges for scraping and set parsing-related parameters.
+* **`src/scraping/mtecresults_scraper.py`**: This can be modified to account for changes in scraping logic (for instance, if a race report HTML structure changes) or cleaning rules.
 * **Notebooks**: Extend or modify the analysis in `02-data_analysis_tcm2013.ipynb` to explore different aspects of the data.
 
 ---
@@ -51,8 +51,8 @@ The `02-data_analysis.ipynb` notebook contains statistical analysis of the colle
 ## Results & Insights
 Some initial observations that we found interesting.
 * Negative splitting appears in about 10% of cases among both professional and non-professional athletes, thus showing little correlation with such aerobic efficiency factors as VO2max.
-* Male runners seem to be more prone to the "hitting the wall" phenomenon.
+* Male runners seem to be more prone to the "hitting the wall" condition.
 
 ---
 ## Further development
-Our working hypothesis is that a long-distance race outcome should be amenable to polynomial regression analysis. In particular, for a marathon, the pacing dynamics of a runner over the first half (provided enough checkpoint measurements provided) should be a reasonably good predictor of the race outcome. Also, it would be interesting to identify pacing patterns for different categories of runners (in terms of their athletic abilities) by means of clusterization.
+Our working hypothesis is that a long-distance race outcome should be amenable to polynomial regression analysis. In particular, for a marathon, the pacing dynamics of a runner over the first half (provided enough checkpoint measurements provided, say, at least, 3-4 splits) should be a reasonably good predictor of the individual race outcome. Also, it would be interesting to identify pacing patterns for different categories of runners (in terms of their athletic abilities) by means of clusterization.
