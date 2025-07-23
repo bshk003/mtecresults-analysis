@@ -1,0 +1,69 @@
+# config/params.yaml
+
+# These are parameters for the data scraping and cleaning script customized 
+# for the Twin Cities Marathon 2013 race reports one the mtecresults server.
+# The data source: https://www.mtecresults.com/race/leaderboard/1760/2013_Medtronic_Twin_Cities_Marathon-Marathon
+
+scraping:
+    url_template: 'https://www.mtecresults.com/runner/show?rid={rid}&race={race}'
+    race_id: 1760 # TCM 2013. The accompanying wheelchair race has race_id=1761
+
+    headers:
+        User-Agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+        Cache-Control: "no-cache, no-store, must-revalidate"
+
+    batch_size: 10
+    output_file: 'data/raw/tcm2013_data.csv' # The file to store the race results in.
+
+    # For the TCM 2013 race, the official elite and sub-elite runners' IDs (bib-numbers) are in the interval [1,399]. 
+    # The wheelchair athletes' entries are in [400, 500]. The general public entries are in [1001, 13999].
+    # To be easier on the mtecresults server, the ID pool for bruteforcing can be reduced.
+    
+    runner_ids_pool:
+        - [1, 399]
+        - [1001, 13999]
+        
+    runner_id: 'runner_id' # The index column. It matches runner's bib-number for the TCM 2013, but it is not always the case for other races.
+
+personal: # Personal data to save
+    - 'event'
+    - 'age'
+    - 'sex'
+    - 'residence'
+
+splits:    
+    distance: # Map a split label to the corresponding distance.
+        '5K': 3.10      # 5K (~3.10686 miles)
+        '10K': 6.21     # 10K (~6.21371 miles)
+        '13.1M': 13.10  # Half marathon
+        '30K': 18.64    # 30K (~18.6411 miles)
+        '21M': 21.00
+        '24M': 24.00
+        'Finish': 26.20 # The finish line
+    start:
+        'ChipStart': 'chipstart'
+        'GunStart': 'gunstart'
+
+column_mapping: # Map a human-readable column caption from a race report table to the dataframe column name
+    'Segment Time': 'segment_time'
+    'Time of Day': 'time_of_day'
+    'Pace': 'pace'
+    'Overall Place': 'overall_place'
+    'Division Place': 'division_place'
+    'Sex Place': 'sex_place'
+    'Age Graded Place': 'age_graded_place'
+    'Passed / By': 'passed_by'
+        
+cleaning: # Fields to keep and filter by in the cleaned up dataset
+    filter_by:    
+        - event: 'Marathon' # For the accompanying wheelchair race (race_id=1761), use 'Wheelchair'
+    personal:
+        - 'age'
+        - 'sex'
+        - 'residence'
+    split_info:
+        - 'segment_time'
+        - 'overall_place'
+        - 'pace'
+    output_file: 'data/clean/tcm2013_data_clean.csv'
+

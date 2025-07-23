@@ -1,0 +1,70 @@
+# config/params.yaml
+
+# These are parameters for the data scraping and cleaning script customized 
+# for the Twin Cities Marathon 2024 race reports one the mtecresults server.
+# The data source: https://www.mtecresults.com/race/leaderboard/16695/2024_Medtronic_Twin_Cities_Marathon-Marathon
+
+# This should work for other races as well upon appropriate modifications. 
+
+scraping:
+    url_template: 'https://www.mtecresults.com/runner/show?rid={rid}&race={race}'
+    race_id: 16695 # TCM 2024. The accompanying wheelchair race has race_id=16696
+
+    headers:
+        User-Agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+        Cache-Control: "no-cache, no-store, must-revalidate"
+
+    batch_size: 10
+    output_file: 'data/raw/tcm2024_data.csv' # A file to store the raw data in.
+
+     
+    runner_ids_pool: # Unlike the TCM 2013, the IDs seem to be scattered.
+        - [1000, 30000]
+        
+    runner_id: 'runner_id' # The index column. For the TCM 2024 this is _not_ the bib-number. 
+
+personal:
+    - 'event'
+    - 'age'
+    - 'sex'
+    - 'residence'
+
+splits:    
+    distance: # Map each split label to the corresponding distance (in km).
+        '5K': 5.00     
+        '10K': 10.00    
+        '15K': 15.00    
+        '20K': 20.00
+        '13.1M': 21.10  # Half marathon
+        '25K': 25.00
+        '30K': 30.00
+        '35K': 35.00
+        '40K': 40.00
+        'Finish': 42.00 # The finish line
+    start:
+        'ChipStart': 'chipstart'
+        'GunStart': 'gunstart'
+
+column_mapping: # Map a human-readable column caption to the dataframe column name
+    'Segment Time': 'segment_time'
+    'Time of Day': 'time_of_day'
+    'Pace': 'pace'
+    'Overall Place': 'overall_place'
+    'Division Place': 'division_place'
+    'Sex Place': 'sex_place'
+    'Age Graded Place': 'age_graded_place'
+    'Passed / By': 'passed_by'
+        
+cleaning:
+    filter_by:    
+        - event: 'Marathon' 
+    personal:
+        - 'age'
+        - 'sex'
+        - 'residence'
+    split_info:
+        - 'segment_time'
+        - 'overall_place'
+        - 'pace'
+    output_file: 'data/clean/tcm2024_data_clean.csv'
+
