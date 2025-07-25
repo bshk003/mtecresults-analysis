@@ -214,7 +214,7 @@ def scrape_race_data(config_params, output_file):
         with open(SESSION_FILE, 'w') as f:
             f.write(str(runner_id))
         
-    print (f'Data fetching completed. {processed} IDs have been processed.\n{saved} entrie(s) are saved in {OUTPUT_FILE}.')
+    print (f'Data fetching completed. {saved} entrie(s) saved in {OUTPUT_FILE}.')
 
     return df
 
