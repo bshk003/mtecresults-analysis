@@ -48,11 +48,10 @@ The latter notebook features a polynomial regression final time predictor. A qua
 * **Notebooks**: Extend or modify the analysis in `02-data_analysis_<...>.ipynb` to explore different aspects of the data.
 
 
-
 ### Results & Insights
 Some initial observations that we found interesting:
 * according to the TCM 2013 analysis, negative splitting appears almost uniformly in about 10% of cases among both professional and non-professional athletes, thus showing little correlation with such aerobic efficiency factors as VO2max. A similar conclusion can be made based on the 2024 data, though with some reservations;
-* male runners seem to be more prone to the "hitting the wall" condition.
+* male runners seem to be more prone to encountering the "hitting the wall" condition.
 
 
 ### Further development
